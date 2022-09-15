@@ -1,0 +1,7 @@
+---
+- name: Deploy DNS Server on Alma Linux 
+  hosts: all 
+  become: true 
+
+  roles: 
+    - role-dns-server

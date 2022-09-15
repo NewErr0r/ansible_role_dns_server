@@ -1,0 +1,15 @@
+$TTL 86400
+@   IN  SOA {{ dns_name_zone }}. root.{{ dns_name_zone }}. (
+        2019112201  ;Serial
+        3600        ;Refresh
+        1800        ;Retry
+        604800      ;Expire
+        86400       ;Minimum TTL
+)
+           IN      NS          {{ inventory_hostname }}.{{ dns_name_zone }}.
+           IN      A           {{ ansible_ssh_host }}
+{{ inventory_hostname }}        IN      A           {{ ansible_ssh_host }}
+{{ name_1 }}        IN      A           {{ ip_address_1 }}
+{{ name_2 }}        IN      A           {{ ip_address_2 }}
+{{ name_3 }}        IN      A           {{ ip_address_3 }}
+{{ name_4 }}        IN      CNAME       {{ ip_address_4 }}.{{ dns_name_zone }}.

@@ -1,0 +1,3 @@
+---
+dns_named_conf: /etc/named.conf
+dns_file_zone: /var/named/{{ dns_name_zone }}

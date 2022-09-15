@@ -1,0 +1,11 @@
+---
+- name: Started and Enabled DNS
+  service: 
+    name: named 
+    enabled: true 
+    state: started 
+
+- name: Restarted Firewalld
+  service: 
+    name: firewalld 
+    state: restarted

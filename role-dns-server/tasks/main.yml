@@ -1,0 +1,39 @@
+---
+- name: Install packages for DNS
+  dnf: 
+    name: 
+      - bind 
+      - bind-utils
+    state: latest 
+
+- name: Disable SELinux now
+  shell:  | 
+    setenforce 0 
+  when: 
+    - ansible_selinux.status == 'enabled'
+
+- name: Disable SELinux 
+  ansible.posix.selinux:
+    state: disabled
+  when: 
+    - ansible_selinux.status == 'enabled'
+
+- name: Configure file 'named.conf'
+  template: 
+    src: named.conf.j2
+    dest: "{{ dns_named_conf }}"
+
+- name: 'Configure file zone "{{ dns_name_zone }}"'
+  template: 
+    src: demo.wsr.j2
+    dest: "{{ dns_file_zone }}"
+  notify: 
+    - Started and Enabled DNS
+
+- name: Configure permission for Firewalld 
+  firewalld: 
+    service: dns 
+    permanent: true 
+    state: enabled 
+  notify: 
+    - Restarted Firewalld
